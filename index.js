@@ -7,15 +7,13 @@ function fillButton(index, text) {
 }
 // pre-made a function. You can use this function to present an alert to say someone wins
 function winningAlert(winner) {
-  if(confirm(`Horraaay, ${winner} wins!`)){
-     // The code here will be exectued if you press on OK button that will pop on the window 
+  if (confirm(`Horraaay, ${winner} wins!`)) {
+    // The code here will be exectued if you press on OK button that will pop on the window
   }
 }
 
 // SAMPLE CODE: This code fills the 1st and 9th button with X and O initially
 // ❗️ Delete this code once you are done testing
-fillButton(1, "X");
-fillButton(9, "O");
 
 /**
  *
@@ -24,13 +22,85 @@ fillButton(9, "O");
  * Add your code here, since this is going to be your main function
  * That interacts with the UI
  */
+let playerOne = 1;
+let X = "X";
+let O = "O";
+let xArray = [];
+let oArray = [];
+const winningCondition = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9],
+  [1, 4, 7],
+  [2, 5, 8],
+  [3, 6, 9],
+  [1, 5, 9],
+  [3, 5, 7],
+];
+
 function clickButton(index) {
-  console.log(`Button number ${index} is clicked`);
+  // if (playerOne == 1) {
+  //   document.getElementById(index).classList.add("green");
+  //   fillButton(index, X);
+  //   document.getElementById(index).innerHTML == "o";
+
+  //   xArray.push(index);
+  //   playerOne = 0;
+  //   checkWinner(xArray, winningCondition, "X");
+  //   checkDraw();
+  // } else {
+  //   document.getElementById(index).classList.add("red");
+  //   fillButton(index, O);
+
+  //   oArray.push(index);
+  //   playerOne = 1;
+  //   checkWinner(oArray, winningCondition, "O");
+  //   checkDraw();
+  // }
+
+  if (playerOne == 1) {
+    document.getElementById(index).classList.add("green");
+    fillButton(index, X);
+    document.getElementById(index).onclick = 0;
+    xArray.push(index);
+    playerOne = 0;
+    checkWinner(xArray, winningCondition, "X");
+    checkDraw();
+  } else {
+    document.getElementById(index).classList.add("red");
+    fillButton(index, O);
+    document.getElementById(index).onclick = 0;
+    oArray.push(index);
+    playerOne = 1;
+    checkWinner(oArray, winningCondition, "O");
+    checkDraw();
+  }
   // Your main code here.
 }
 
-/**
- * (Optional) It's always a good idea to make a function for every single purpose.
- */
-// function checkWinner
-// function restartGame
+function checkWinner(array, winingCon, player) {
+  console.log(array);
+  for (i = 0; i < winingCon.length; i++) {
+    if (winingCon[i].every((x) => array.includes(x))) {
+      if (confirm(`${player}, Wins!`)) {
+        restartGame();
+      }
+    }
+  }
+}
+function checkDraw() {
+  if (xArray.length + oArray.length == 9) {
+    if (confirm("It's a Draw!")) {
+      restartGame();
+    }
+  }
+}
+
+function restartGame() {
+  for (i = 0; i < 9; i++) {
+    document.getElementById(i + 1).innerHTML = "";
+    document.getElementById(i + 1).disabled = false;
+  }
+  oArray = [];
+  xArray = [];
+}

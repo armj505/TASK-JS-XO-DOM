@@ -32,6 +32,9 @@ body {
 
   font-family: "Permanent Marker", cursive;
 }
+.xobutton:hover {
+  background-color: lightgrey;
+}
 
 .green {
   color: green;
